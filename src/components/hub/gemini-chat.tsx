@@ -17,7 +17,7 @@ import { toast } from 'sonner';
 import { messageText } from '@/lib/chat-rules';
 import logo from '@/assets/logo-b.jpeg.asset.json';
 
-export function GeminiPanel({threadId}:{threadId?:string}){
+export function GeminiPanel({threadId}:{threadId?:string | undefined}){
  const {user,ready}=useAccount(); const list=useServerFn(listThreads); const create=useServerFn(createThread); const load=useServerFn(loadThread); const remove=useServerFn(deleteThread);const navigate=useNavigate();const query=useQueryClient();const [creating,setCreating]=useState(false);
  const threads=useQuery({queryKey:['threads',user?.id],enabled:!!user,queryFn:()=>list()});
  const history=useQuery({queryKey:['thread',user?.id,threadId],enabled:!!user&&!!threadId,queryFn:()=>load({data:{id:threadId??''}})});

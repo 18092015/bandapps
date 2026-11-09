@@ -11,6 +11,8 @@ export async function handleChat(request: Request) {
   const messages = await validateUIMessages({messages:body.messages});
   const last = messages.at(-1);
   if (!last || last.role !== 'user' || !messageText(last).trim()) return new Response('Digite uma pergunta.',{status:400});
+  const first = messages[0];
+  if (!first) return new Response('Digite uma pergunta.',{status:400});
   const key = process.env['LOVABLE_API_KEY'];
   if(!key) return new Response('A conexão com o Gemini não está configurada.',{status:401});
   const token = request.headers.get('authorization')?.replace(/^Bearer /,'');
@@ -35,7 +37,7 @@ export async function handleChat(request: Request) {
    if(!body.threadId || !userId) return;
    const {error}=await db.from('chat_messages').upsert({thread_id:body.threadId,user_id:userId,message_id:responseMessage.id,message:JSON.parse(JSON.stringify(responseMessage)) as Json},{onConflict:'thread_id,message_id'});
    if(error) throw new Error('A resposta apareceu, mas não foi possível salvá-la.');
-   const updated=await db.from('chat_threads').update({title:messageText(messages[0]).slice(0,80)||'Nova conversa',updated_at:new Date().toISOString()}).eq('id',body.threadId).eq('user_id',userId);
+   const updated=await db.from('chat_threads').update({title:messageText(first).slice(0,80)||'Nova conversa',updated_at:new Date().toISOString()}).eq('id',body.threadId).eq('user_id',userId);
    if(updated.error) throw new Error('Não foi possível atualizar a conversa.');
   }});
   const streamed=await withLovableAiGatewayRunIdHeader(response,gateway,{'Cache-Control':'no-store'});

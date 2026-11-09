@@ -73,6 +73,9 @@
 }
 
 :root {
+  --google-button-background: oklch(1 0 0);
+  --google-button-border: oklch(0.565 0.005 150);
+  --google-button-foreground: oklch(0.239 0 0);
   --radius: 0.75rem;
   --background: oklch(0.985 0.004 30);
   --foreground: oklch(0.2 0.02 25);
@@ -109,6 +112,9 @@
 }
 
 .dark {
+  --google-button-background: oklch(0.187 0.002 286);
+  --google-button-border: oklch(0.657 0.005 150);
+  --google-button-foreground: oklch(0.918 0.001 286);
   --background: oklch(0.129 0.042 264.695);
   --foreground: oklch(0.984 0.003 247.858);
   --card: oklch(0.208 0.042 265.755);
@@ -153,4 +159,11 @@
     background-color: var(--color-background);
     color: var(--color-foreground);
   }
+}
+
+.google-sign-in,
+.google-sign-in:hover {
+  background-color: var(--google-button-background);
+  border-color: var(--google-button-border);
+  color: var(--google-button-foreground);
 }

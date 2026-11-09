@@ -61,7 +61,7 @@ function AiPanel({ kind }: { kind: AiKey }) {
   return (
     <div className="flex flex-1 flex-col gap-3 min-h-0">
       <form onSubmit={go} className="flex gap-2">
-        <input value={text} onChange={(e) => setText(e.target.value)} placeholder={AI_TOOLS[kind].hint}
+        <input value={text} onChange={(e) => setText(e.target.value)} placeholder={AI_TOOLS.perguntas.hint}
           className="flex-1 rounded-xl border bg-card px-4 py-2 text-sm outline-none focus:ring-2 focus:ring-ring" />
         <button disabled={busy} className="rounded-xl bg-primary px-4 py-2 text-sm font-semibold text-primary-foreground disabled:opacity-50">
           {busy ? "..." : "Enviar"}

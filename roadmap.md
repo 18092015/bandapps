@@ -1,5 +1,5 @@
 # Tarefas
-- [ ] Adicionar Google ao login existente e verificar o botão nas telas desktop e celular.
+- [x] Adicionar Google ao login existente e verificar o botão nas telas desktop e celular.
 - [x] Corrigir dependências ausentes e erros de tipos; verificar abertura da página e envio no chat.
 - [ ] Login opcional com Microsoft e perfil da conta.
 - [ ] Conversas Gemini com mensagens juntas e histórico privado na conta.

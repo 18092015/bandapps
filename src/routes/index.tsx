@@ -1,23 +1,95 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { useState } from "react";
+import logo from "@/assets/logo-b.jpeg.asset.json";
 
-// The home route ships no og:image, so serve-time hosting can inject the
-// project's social preview (explicit og:image or latest screenshot).
 export const Route = createFileRoute("/")({
+  head: () => ({
+    meta: [
+      { title: "Colband Hub — IA, Gravador e Moodle" },
+      { name: "description", content: "Acesse IA (perguntas, imagem, vídeo), gravador e Moodle em um só lugar." },
+      { property: "og:title", content: "Colband Hub — IA, Gravador e Moodle" },
+      { property: "og:description", content: "Acesse IA, gravador e Moodle em um só lugar." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary" },
+    ],
+  }),
   component: Index,
 });
 
-// IMPORTANT: Replace this placeholder. See ./README.md for routing conventions.
-function Index() {
+const MOODLE = "https://colbandcom.sharepoint.com/Pages/Colband.aspx";
+const AI_TOOLS = {
+  perguntas: { label: "Perguntas", url: "https://duck.ai/" },
+  imagem: { label: "Imagem", url: "https://pt.vidnoz.com/ia-gerador-de-imagens-gratis.html" },
+  video: { label: "Vídeo", url: "https://loremotion.com/generate" },
+} as const;
+type AiKey = keyof typeof AI_TOOLS;
+type Section = "ia" | "gravador";
+
+function Frame({ url, title }: { url: string; title: string }) {
   return (
-    <div
-      className="flex min-h-screen items-center justify-center"
-      style={{ backgroundColor: "#fcfbf8" }}
-    >
-      <img
-        data-lovable-blank-page-placeholder="REMOVE_THIS"
-        src="https://cdn.gpteng.co/blank-app-v1.svg"
-        alt="Your app will live here!"
-      />
+    <div className="flex flex-1 flex-col gap-2 min-h-0">
+      <div className="flex items-center justify-between gap-2 text-xs text-muted-foreground">
+        <span className="truncate">Se não carregar aqui, o site bloqueia incorporação.</span>
+        <a href={url} target="_blank" rel="noopener noreferrer"
+          className="shrink-0 rounded-md bg-secondary px-3 py-1.5 font-semibold text-secondary-foreground hover:bg-accent">
+          Abrir em nova aba ↗
+        </a>
+      </div>
+      <iframe key={url} src={url} title={title}
+        className="flex-1 w-full rounded-xl border bg-card min-h-[60vh]"
+        allow="camera; microphone; clipboard-write; autoplay; fullscreen" />
+    </div>
+  );
+}
+
+function Index() {
+  const [section, setSection] = useState<Section>("ia");
+  const [ai, setAi] = useState<AiKey>("perguntas");
+
+  const navBtn = (active: boolean) =>
+    `flex flex-col items-center gap-1 rounded-xl px-3 py-2 text-xs font-semibold transition-colors ${
+      active ? "bg-primary text-primary-foreground" : "text-muted-foreground hover:bg-accent hover:text-accent-foreground"
+    }`;
+
+  return (
+    <div className="flex h-screen flex-col md:flex-row bg-background">
+      <aside className="order-2 md:order-1 flex md:flex-col items-center justify-around md:justify-start gap-2 border-t md:border-t-0 md:border-r bg-card p-2 md:w-24 md:py-4">
+        <img src={logo.url} alt="Logo Colband" className="hidden md:block h-12 w-12 object-contain mb-4" />
+        <button className={navBtn(section === "ia")} onClick={() => setSection("ia")}>
+          <span className="text-lg">✦</span>IA
+        </button>
+        <button className={navBtn(section === "gravador")} onClick={() => setSection("gravador")}>
+          <span className="text-lg">●</span>Gravador
+        </button>
+        <a className={navBtn(false)} href={MOODLE} target="_blank" rel="noopener noreferrer">
+          <span className="text-lg">↗</span>Moodle
+        </a>
+      </aside>
+
+      <main className="order-1 md:order-2 flex flex-1 flex-col gap-4 p-4 min-h-0">
+        <header className="flex items-center gap-3">
+          <img src={logo.url} alt="" className="md:hidden h-9 w-9 object-contain" />
+          <h1 className="text-xl font-bold">{section === "ia" ? "Inteligência Artificial" : "Gravador"}</h1>
+        </header>
+
+        {section === "ia" ? (
+          <>
+            <div className="flex gap-2">
+              {(Object.keys(AI_TOOLS) as AiKey[]).map((k) => (
+                <button key={k} onClick={() => setAi(k)}
+                  className={`rounded-full px-4 py-2 text-sm font-semibold transition-colors ${
+                    ai === k ? "bg-primary text-primary-foreground" : "bg-secondary text-secondary-foreground hover:bg-accent"
+                  }`}>
+                  {AI_TOOLS[k].label}
+                </button>
+              ))}
+            </div>
+            <Frame url={AI_TOOLS[ai].url} title={AI_TOOLS[ai].label} />
+          </>
+        ) : (
+          <Frame url="https://gravacaofake.lovable.app/" title="Gravador" />
+        )}
+      </main>
     </div>
   );
 }

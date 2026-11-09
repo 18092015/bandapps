@@ -10,11 +10,17 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as ApiPublicChatRouteImport } from './routes/api/public/chat'
 import { Route as ApiPublicVideoIdRouteImport } from './routes/api/public/video.$id'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiPublicChatRoute = ApiPublicChatRouteImport.update({
+  id: '/api/public/chat',
+  path: '/api/public/chat',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ApiPublicVideoIdRoute = ApiPublicVideoIdRouteImport.update({
@@ -25,27 +31,31 @@ const ApiPublicVideoIdRoute = ApiPublicVideoIdRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/api/public/chat': typeof ApiPublicChatRoute
   '/api/public/video/$id': typeof ApiPublicVideoIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/api/public/chat': typeof ApiPublicChatRoute
   '/api/public/video/$id': typeof ApiPublicVideoIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/api/public/chat': typeof ApiPublicChatRoute
   '/api/public/video/$id': typeof ApiPublicVideoIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/api/public/video/$id'
+  fullPaths: '/' | '/api/public/chat' | '/api/public/video/$id'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/api/public/video/$id'
-  id: '__root__' | '/' | '/api/public/video/$id'
+  to: '/' | '/api/public/chat' | '/api/public/video/$id'
+  id: '__root__' | '/' | '/api/public/chat' | '/api/public/video/$id'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  ApiPublicChatRoute: typeof ApiPublicChatRoute
   ApiPublicVideoIdRoute: typeof ApiPublicVideoIdRoute
 }
 
@@ -56,6 +66,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/public/chat': {
+      id: '/api/public/chat'
+      path: '/api/public/chat'
+      fullPath: '/api/public/chat'
+      preLoaderRoute: typeof ApiPublicChatRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/api/public/video/$id': {
@@ -70,6 +87,7 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  ApiPublicChatRoute: ApiPublicChatRoute,
   ApiPublicVideoIdRoute: ApiPublicVideoIdRoute,
 }
 export const routeTree = rootRouteImport

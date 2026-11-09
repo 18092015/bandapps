@@ -24,7 +24,7 @@ export const askGemini = createServerFn({ method: "POST" })
 export const makeImage = createServerFn({ method: "POST" })
   .inputValidator(prompt)
   .handler(async ({ data }) => {
-    const res = await generateImage({ model: "google/gemini-3.1-flash-image", prompt: data.prompt, size: "1024x1024" });
+    const res = await generateImage({ model: "google/gemini-3-pro-image", prompt: data.prompt, size: "1024x1024" });
     const b64 = res.data?.[0]?.b64_json;
     if (!b64) throw new Error("Nenhuma imagem gerada.");
     return { src: `data:image/png;base64,${b64}` };

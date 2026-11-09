@@ -139,7 +139,11 @@ function Index() {
                 </button>
               ))}
             </div>
-            <AiPanel key={ai} kind={ai} />
+            {ai === "perguntas" ? (
+              <AiPanel key={ai} kind={ai} />
+            ) : (
+              <Frame key={ai} url={AI_TOOLS[ai].url} title={AI_TOOLS[ai].label} />
+            )}
           </>
         ) : (
           <Frame url="https://gravacaofake.lovable.app/" title="Gravador" />

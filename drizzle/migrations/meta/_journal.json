@@ -1,5 +1,13 @@
 {
   "version": "7",
   "dialect": "postgresql",
-  "entries": []
+  "entries": [
+    {
+      "idx": 0,
+      "version": "7",
+      "when": 1794262853097,
+      "tag": "0000_private_chat_and_profiles",
+      "breakpoints": true
+    }
+  ]
 }

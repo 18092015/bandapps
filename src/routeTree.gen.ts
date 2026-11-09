@@ -10,12 +10,30 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as GravadorRouteImport } from './routes/gravador'
+import { Route as SalvarRouteImport } from './routes/salvar'
+import { Route as ChatThreadIdRouteImport } from './routes/chat.$threadId'
 import { Route as ApiPublicChatRouteImport } from './routes/api/public/chat'
 import { Route as ApiPublicVideoIdRouteImport } from './routes/api/public/video.$id'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const GravadorRoute = GravadorRouteImport.update({
+  id: '/gravador',
+  path: '/gravador',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SalvarRoute = SalvarRouteImport.update({
+  id: '/salvar',
+  path: '/salvar',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ChatThreadIdRoute = ChatThreadIdRouteImport.update({
+  id: '/chat/$threadId',
+  path: '/chat/$threadId',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ApiPublicChatRoute = ApiPublicChatRouteImport.update({
@@ -31,30 +49,61 @@ const ApiPublicVideoIdRoute = ApiPublicVideoIdRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/gravador': typeof GravadorRoute
+  '/salvar': typeof SalvarRoute
+  '/chat/$threadId': typeof ChatThreadIdRoute
   '/api/public/chat': typeof ApiPublicChatRoute
   '/api/public/video/$id': typeof ApiPublicVideoIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/gravador': typeof GravadorRoute
+  '/salvar': typeof SalvarRoute
+  '/chat/$threadId': typeof ChatThreadIdRoute
   '/api/public/chat': typeof ApiPublicChatRoute
   '/api/public/video/$id': typeof ApiPublicVideoIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/gravador': typeof GravadorRoute
+  '/salvar': typeof SalvarRoute
+  '/chat/$threadId': typeof ChatThreadIdRoute
   '/api/public/chat': typeof ApiPublicChatRoute
   '/api/public/video/$id': typeof ApiPublicVideoIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/api/public/chat' | '/api/public/video/$id'
+  fullPaths:
+    | '/'
+    | '/gravador'
+    | '/salvar'
+    | '/chat/$threadId'
+    | '/api/public/chat'
+    | '/api/public/video/$id'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/api/public/chat' | '/api/public/video/$id'
-  id: '__root__' | '/' | '/api/public/chat' | '/api/public/video/$id'
+  to:
+    | '/'
+    | '/gravador'
+    | '/salvar'
+    | '/chat/$threadId'
+    | '/api/public/chat'
+    | '/api/public/video/$id'
+  id:
+    | '__root__'
+    | '/'
+    | '/gravador'
+    | '/salvar'
+    | '/chat/$threadId'
+    | '/api/public/chat'
+    | '/api/public/video/$id'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  GravadorRoute: typeof GravadorRoute
+  SalvarRoute: typeof SalvarRoute
+  ChatThreadIdRoute: typeof ChatThreadIdRoute
   ApiPublicChatRoute: typeof ApiPublicChatRoute
   ApiPublicVideoIdRoute: typeof ApiPublicVideoIdRoute
 }
@@ -66,6 +115,27 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/gravador': {
+      id: '/gravador'
+      path: '/gravador'
+      fullPath: '/gravador'
+      preLoaderRoute: typeof GravadorRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/salvar': {
+      id: '/salvar'
+      path: '/salvar'
+      fullPath: '/salvar'
+      preLoaderRoute: typeof SalvarRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/chat/$threadId': {
+      id: '/chat/$threadId'
+      path: '/chat/$threadId'
+      fullPath: '/chat/$threadId'
+      preLoaderRoute: typeof ChatThreadIdRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/api/public/chat': {
@@ -87,6 +157,9 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  GravadorRoute: GravadorRoute,
+  SalvarRoute: SalvarRoute,
+  ChatThreadIdRoute: ChatThreadIdRoute,
   ApiPublicChatRoute: ApiPublicChatRoute,
   ApiPublicVideoIdRoute: ApiPublicVideoIdRoute,
 }

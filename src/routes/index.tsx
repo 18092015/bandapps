@@ -21,8 +21,8 @@ export const Route = createFileRoute("/")({
 const MOODLE = "https://colbandcom.sharepoint.com/Pages/Colband.aspx";
 const AI_TOOLS = {
   perguntas: { label: "Perguntas", hint: "Pergunte qualquer coisa ao Gemini..." },
-  imagem: { label: "Imagem", hint: "Descreva a imagem que você quer..." },
-  video: { label: "Vídeo", hint: "Descreva o vídeo que você quer..." },
+  imagem: { label: "Imagem", url: "https://pt.vidnoz.com/ia-gerador-de-imagens-gratis.html" },
+  video: { label: "Vídeo", url: "https://loremotion.com/generate" },
 } as const;
 
 function AiPanel({ kind }: { kind: AiKey }) {
@@ -61,7 +61,7 @@ function AiPanel({ kind }: { kind: AiKey }) {
   return (
     <div className="flex flex-1 flex-col gap-3 min-h-0">
       <form onSubmit={go} className="flex gap-2">
-        <input value={text} onChange={(e) => setText(e.target.value)} placeholder={AI_TOOLS[kind].hint}
+        <input value={text} onChange={(e) => setText(e.target.value)} placeholder={AI_TOOLS.perguntas.hint}
           className="flex-1 rounded-xl border bg-card px-4 py-2 text-sm outline-none focus:ring-2 focus:ring-ring" />
         <button disabled={busy} className="rounded-xl bg-primary px-4 py-2 text-sm font-semibold text-primary-foreground disabled:opacity-50">
           {busy ? "..." : "Enviar"}
@@ -139,7 +139,11 @@ function Index() {
                 </button>
               ))}
             </div>
-            <AiPanel key={ai} kind={ai} />
+            {ai === "perguntas" ? (
+              <AiPanel key={ai} kind={ai} />
+            ) : (
+              <Frame key={ai} url={AI_TOOLS[ai].url} title={AI_TOOLS[ai].label} />
+            )}
           </>
         ) : (
           <Frame url="https://gravacaofake.lovable.app/" title="Gravador" />

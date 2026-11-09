@@ -21,8 +21,8 @@ export const Route = createFileRoute("/")({
 const MOODLE = "https://colbandcom.sharepoint.com/Pages/Colband.aspx";
 const AI_TOOLS = {
   perguntas: { label: "Perguntas", hint: "Pergunte qualquer coisa ao Gemini..." },
-  imagem: { label: "Imagem", hint: "Descreva a imagem que você quer..." },
-  video: { label: "Vídeo", hint: "Descreva o vídeo que você quer..." },
+  imagem: { label: "Imagem", url: "https://pt.vidnoz.com/ia-gerador-de-imagens-gratis.html" },
+  video: { label: "Vídeo", url: "https://loremotion.com/generate" },
 } as const;
 
 function AiPanel({ kind }: { kind: AiKey }) {

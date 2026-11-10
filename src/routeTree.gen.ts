@@ -10,6 +10,7 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AppsRouteImport } from './routes/apps'
 import { Route as GravadorRouteImport } from './routes/gravador'
 import { Route as SalvarRouteImport } from './routes/salvar'
 import { Route as ChatThreadIdRouteImport } from './routes/chat.$threadId'
@@ -20,6 +21,11 @@ import { Route as ApiPublicVideoIdRouteImport } from './routes/api/public/video.
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AppsRoute = AppsRouteImport.update({
+  id: '/apps',
+  path: '/apps',
   getParentRoute: () => rootRouteImport,
 } as any)
 const GravadorRoute = GravadorRouteImport.update({
@@ -55,6 +61,7 @@ const ApiPublicVideoIdRoute = ApiPublicVideoIdRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/apps': typeof AppsRoute
   '/gravador': typeof GravadorRoute
   '/salvar': typeof SalvarRoute
   '/chat/$threadId': typeof ChatThreadIdRoute
@@ -64,6 +71,7 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/apps': typeof AppsRoute
   '/gravador': typeof GravadorRoute
   '/salvar': typeof SalvarRoute
   '/chat/$threadId': typeof ChatThreadIdRoute
@@ -74,6 +82,7 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/apps': typeof AppsRoute
   '/gravador': typeof GravadorRoute
   '/salvar': typeof SalvarRoute
   '/chat/$threadId': typeof ChatThreadIdRoute
@@ -85,6 +94,7 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/apps'
     | '/gravador'
     | '/salvar'
     | '/chat/$threadId'
@@ -94,6 +104,7 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/apps'
     | '/gravador'
     | '/salvar'
     | '/chat/$threadId'
@@ -103,6 +114,7 @@ export interface FileRouteTypes {
   id:
     | '__root__'
     | '/'
+    | '/apps'
     | '/gravador'
     | '/salvar'
     | '/chat/$threadId'
@@ -113,6 +125,7 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AppsRoute: typeof AppsRoute
   GravadorRoute: typeof GravadorRoute
   SalvarRoute: typeof SalvarRoute
   ChatThreadIdRoute: typeof ChatThreadIdRoute
@@ -128,6 +141,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/apps': {
+      id: '/apps'
+      path: '/apps'
+      fullPath: '/apps'
+      preLoaderRoute: typeof AppsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/gravador': {
@@ -177,6 +197,7 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AppsRoute: AppsRoute,
   GravadorRoute: GravadorRoute,
   SalvarRoute: SalvarRoute,
   ChatThreadIdRoute: ChatThreadIdRoute,

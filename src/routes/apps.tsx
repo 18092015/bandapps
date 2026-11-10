@@ -1,0 +1,3 @@
+import { createFileRoute } from '@tanstack/react-router';
+import { HubShell } from '@/components/hub/hub-shell';
+export const Route=createFileRoute('/apps')({head:()=>({meta:[{title:'Apps Google e Microsoft — Colband Hub'},{name:'description',content:'Acesse rapidamente todos os apps do Google e da Microsoft.'},{property:'og:title',content:'Apps Google e Microsoft — Colband Hub'},{property:'og:description',content:'Acesse rapidamente todos os apps do Google e da Microsoft.'},{property:'og:type',content:'website'},{name:'twitter:card',content:'summary'}]}),component:()=> <HubShell section="apps"/>});

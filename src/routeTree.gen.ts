@@ -14,6 +14,7 @@ import { Route as GravadorRouteImport } from './routes/gravador'
 import { Route as SalvarRouteImport } from './routes/salvar'
 import { Route as ChatThreadIdRouteImport } from './routes/chat.$threadId'
 import { Route as ApiPublicChatRouteImport } from './routes/api/public/chat'
+import { Route as ApiPublicUploadCodeRouteImport } from './routes/api/public/upload-code'
 import { Route as ApiPublicVideoIdRouteImport } from './routes/api/public/video.$id'
 
 const IndexRoute = IndexRouteImport.update({
@@ -41,6 +42,11 @@ const ApiPublicChatRoute = ApiPublicChatRouteImport.update({
   path: '/api/public/chat',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiPublicUploadCodeRoute = ApiPublicUploadCodeRouteImport.update({
+  id: '/api/public/upload-code',
+  path: '/api/public/upload-code',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ApiPublicVideoIdRoute = ApiPublicVideoIdRouteImport.update({
   id: '/api/public/video/$id',
   path: '/api/public/video/$id',
@@ -53,6 +59,7 @@ export interface FileRoutesByFullPath {
   '/salvar': typeof SalvarRoute
   '/chat/$threadId': typeof ChatThreadIdRoute
   '/api/public/chat': typeof ApiPublicChatRoute
+  '/api/public/upload-code': typeof ApiPublicUploadCodeRoute
   '/api/public/video/$id': typeof ApiPublicVideoIdRoute
 }
 export interface FileRoutesByTo {
@@ -61,6 +68,7 @@ export interface FileRoutesByTo {
   '/salvar': typeof SalvarRoute
   '/chat/$threadId': typeof ChatThreadIdRoute
   '/api/public/chat': typeof ApiPublicChatRoute
+  '/api/public/upload-code': typeof ApiPublicUploadCodeRoute
   '/api/public/video/$id': typeof ApiPublicVideoIdRoute
 }
 export interface FileRoutesById {
@@ -70,6 +78,7 @@ export interface FileRoutesById {
   '/salvar': typeof SalvarRoute
   '/chat/$threadId': typeof ChatThreadIdRoute
   '/api/public/chat': typeof ApiPublicChatRoute
+  '/api/public/upload-code': typeof ApiPublicUploadCodeRoute
   '/api/public/video/$id': typeof ApiPublicVideoIdRoute
 }
 export interface FileRouteTypes {
@@ -80,6 +89,7 @@ export interface FileRouteTypes {
     | '/salvar'
     | '/chat/$threadId'
     | '/api/public/chat'
+    | '/api/public/upload-code'
     | '/api/public/video/$id'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -88,6 +98,7 @@ export interface FileRouteTypes {
     | '/salvar'
     | '/chat/$threadId'
     | '/api/public/chat'
+    | '/api/public/upload-code'
     | '/api/public/video/$id'
   id:
     | '__root__'
@@ -96,6 +107,7 @@ export interface FileRouteTypes {
     | '/salvar'
     | '/chat/$threadId'
     | '/api/public/chat'
+    | '/api/public/upload-code'
     | '/api/public/video/$id'
   fileRoutesById: FileRoutesById
 }
@@ -105,6 +117,7 @@ export interface RootRouteChildren {
   SalvarRoute: typeof SalvarRoute
   ChatThreadIdRoute: typeof ChatThreadIdRoute
   ApiPublicChatRoute: typeof ApiPublicChatRoute
+  ApiPublicUploadCodeRoute: typeof ApiPublicUploadCodeRoute
   ApiPublicVideoIdRoute: typeof ApiPublicVideoIdRoute
 }
 
@@ -145,6 +158,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiPublicChatRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/public/upload-code': {
+      id: '/api/public/upload-code'
+      path: '/api/public/upload-code'
+      fullPath: '/api/public/upload-code'
+      preLoaderRoute: typeof ApiPublicUploadCodeRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/api/public/video/$id': {
       id: '/api/public/video/$id'
       path: '/api/public/video/$id'
@@ -161,6 +181,7 @@ const rootRouteChildren: RootRouteChildren = {
   SalvarRoute: SalvarRoute,
   ChatThreadIdRoute: ChatThreadIdRoute,
   ApiPublicChatRoute: ApiPublicChatRoute,
+  ApiPublicUploadCodeRoute: ApiPublicUploadCodeRoute,
   ApiPublicVideoIdRoute: ApiPublicVideoIdRoute,
 }
 export const routeTree = rootRouteImport

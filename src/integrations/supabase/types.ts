@@ -109,12 +109,30 @@ export type Database = {
         }
         Relationships: []
       }
+      upload_codes: {
+        Row: {
+          code: string
+          created_at: string
+          user_id: string
+        }
+        Insert: {
+          code: string
+          created_at?: string
+          user_id: string
+        }
+        Update: {
+          code?: string
+          created_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      my_upload_code: { Args: { _regenerate?: boolean }; Returns: string }
     }
     Enums: {
       [_ in never]: never

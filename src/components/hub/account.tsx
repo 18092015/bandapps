@@ -11,9 +11,9 @@ const AccountContext=createContext<{user:User|null;ready:boolean}>({user:null,re
 export const useAccount=()=>useContext(AccountContext);
 export function AccountProvider({children}:{children:ReactNode}) {
  const [user,setUser]=useState<User|null>(null); const [ready,setReady]=useState(false); const query=useQueryClient(); const router=useRouter();
- useEffect(()=>{let alive=true; const sync=async()=>{const {data}=await supabase.auth.getUser(); if(alive){setUser(data.user);setReady(true);}};
- const {data:{subscription}}=supabase.auth.onAuthStateChange(event=>{if(!['SIGNED_IN','SIGNED_OUT','USER_UPDATED'].includes(event)) return; if(event==='SIGNED_OUT'){setUser(null);query.clear();} else void sync().then(()=>query.invalidateQueries()); void router.invalidate();});
- void sync(); return()=>{alive=false;subscription.unsubscribe();};},[query,router]);
+ useEffect(()=>{let alive=true; let unsubscribe=()=>{}; const sync=async()=>{try{const {data}=await supabase.auth.getUser(); if(alive){setUser(data.user);setReady(true);}}catch{if(alive){setUser(null);setReady(true);}}};
+ try{const {data:{subscription}}=supabase.auth.onAuthStateChange(event=>{if(!['SIGNED_IN','SIGNED_OUT','USER_UPDATED'].includes(event)) return; if(event==='SIGNED_OUT'){setUser(null);query.clear();} else void sync().then(()=>query.invalidateQueries()); void router.invalidate();}); unsubscribe=()=>subscription.unsubscribe(); setReady(true); void sync();}catch{setUser(null);setReady(true);}
+ return()=>{alive=false;unsubscribe();};},[query,router]);
  return <AccountContext.Provider value={{user,ready}}>{children}</AccountContext.Provider>;
 }
 export function AccountButton(){const {user,ready}=useAccount(); const query=useQueryClient(); const router=useRouter(); const [busy,setBusy]=useState(false);

@@ -109,31 +109,53 @@ export type Database = {
         }
         Relationships: []
       }
-      upload_codes: {
-        Row: {
-          code: string
-          created_at: string
-          user_id: string
-        }
-        Insert: {
-          code: string
-          created_at?: string
-          user_id: string
-        }
-        Update: {
-          code?: string
-          created_at?: string
-          user_id?: string
-        }
-        Relationships: []
-      }
+  upload_code_attempts: {
+    Row: {
+      attempt_count: number
+      ip_fingerprint: string
+      window_started_at: string
+    }
+    Insert: {
+      attempt_count?: number
+      ip_fingerprint: string
+      window_started_at?: string
+    }
+    Update: {
+      attempt_count?: number
+      ip_fingerprint?: string
+      window_started_at?: string
+    }
+    Relationships: []
+  }
+  upload_codes: {
+    Row: {
+      code: string
+      expires_at: string
+      updated_at: string
+      user_id: string
+    }
+    Insert: {
+      code: string
+      expires_at: string
+      updated_at?: string
+      user_id: string
+    }
+    Update: {
+      code?: string
+      expires_at?: string
+      updated_at?: string
+      user_id?: string
+    }
+    Relationships: []
+  }
     }
     Views: {
       [_ in never]: never
     }
-    Functions: {
-      my_upload_code: { Args: { _regenerate?: boolean }; Returns: string }
-    }
+  Functions: {
+    my_upload_code: { Args: { _regenerate?: boolean }; Returns: string }
+    verify_upload_code: { Args: { _code: string; _ip_fingerprint: string }; Returns: { owner_user_id: string | null; rate_limited: boolean }[] }
+  }
     Enums: {
       [_ in never]: never
     }

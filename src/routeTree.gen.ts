@@ -13,6 +13,7 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as AppsRouteImport } from './routes/apps'
 import { Route as GravadorRouteImport } from './routes/gravador'
 import { Route as SalvarRouteImport } from './routes/salvar'
+import { Route as AuthCallbackRouteImport } from './routes/auth.callback'
 import { Route as ChatThreadIdRouteImport } from './routes/chat.$threadId'
 import { Route as ApiPublicChatRouteImport } from './routes/api/public/chat'
 import { Route as ApiPublicUploadCodeRouteImport } from './routes/api/public/upload-code'
@@ -36,6 +37,11 @@ const GravadorRoute = GravadorRouteImport.update({
 const SalvarRoute = SalvarRouteImport.update({
   id: '/salvar',
   path: '/salvar',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthCallbackRoute = AuthCallbackRouteImport.update({
+  id: '/auth/callback',
+  path: '/auth/callback',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ChatThreadIdRoute = ChatThreadIdRouteImport.update({
@@ -64,6 +70,7 @@ export interface FileRoutesByFullPath {
   '/apps': typeof AppsRoute
   '/gravador': typeof GravadorRoute
   '/salvar': typeof SalvarRoute
+  '/auth/callback': typeof AuthCallbackRoute
   '/chat/$threadId': typeof ChatThreadIdRoute
   '/api/public/chat': typeof ApiPublicChatRoute
   '/api/public/upload-code': typeof ApiPublicUploadCodeRoute
@@ -74,6 +81,7 @@ export interface FileRoutesByTo {
   '/apps': typeof AppsRoute
   '/gravador': typeof GravadorRoute
   '/salvar': typeof SalvarRoute
+  '/auth/callback': typeof AuthCallbackRoute
   '/chat/$threadId': typeof ChatThreadIdRoute
   '/api/public/chat': typeof ApiPublicChatRoute
   '/api/public/upload-code': typeof ApiPublicUploadCodeRoute
@@ -85,6 +93,7 @@ export interface FileRoutesById {
   '/apps': typeof AppsRoute
   '/gravador': typeof GravadorRoute
   '/salvar': typeof SalvarRoute
+  '/auth/callback': typeof AuthCallbackRoute
   '/chat/$threadId': typeof ChatThreadIdRoute
   '/api/public/chat': typeof ApiPublicChatRoute
   '/api/public/upload-code': typeof ApiPublicUploadCodeRoute
@@ -97,6 +106,7 @@ export interface FileRouteTypes {
     | '/apps'
     | '/gravador'
     | '/salvar'
+    | '/auth/callback'
     | '/chat/$threadId'
     | '/api/public/chat'
     | '/api/public/upload-code'
@@ -107,6 +117,7 @@ export interface FileRouteTypes {
     | '/apps'
     | '/gravador'
     | '/salvar'
+    | '/auth/callback'
     | '/chat/$threadId'
     | '/api/public/chat'
     | '/api/public/upload-code'
@@ -117,6 +128,7 @@ export interface FileRouteTypes {
     | '/apps'
     | '/gravador'
     | '/salvar'
+    | '/auth/callback'
     | '/chat/$threadId'
     | '/api/public/chat'
     | '/api/public/upload-code'
@@ -128,6 +140,7 @@ export interface RootRouteChildren {
   AppsRoute: typeof AppsRoute
   GravadorRoute: typeof GravadorRoute
   SalvarRoute: typeof SalvarRoute
+  AuthCallbackRoute: typeof AuthCallbackRoute
   ChatThreadIdRoute: typeof ChatThreadIdRoute
   ApiPublicChatRoute: typeof ApiPublicChatRoute
   ApiPublicUploadCodeRoute: typeof ApiPublicUploadCodeRoute
@@ -162,6 +175,13 @@ declare module '@tanstack/react-router' {
       path: '/salvar'
       fullPath: '/salvar'
       preLoaderRoute: typeof SalvarRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/auth/callback': {
+      id: '/auth/callback'
+      path: '/auth/callback'
+      fullPath: '/auth/callback'
+      preLoaderRoute: typeof AuthCallbackRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/chat/$threadId': {
@@ -200,6 +220,7 @@ const rootRouteChildren: RootRouteChildren = {
   AppsRoute: AppsRoute,
   GravadorRoute: GravadorRoute,
   SalvarRoute: SalvarRoute,
+  AuthCallbackRoute: AuthCallbackRoute,
   ChatThreadIdRoute: ChatThreadIdRoute,
   ApiPublicChatRoute: ApiPublicChatRoute,
   ApiPublicUploadCodeRoute: ApiPublicUploadCodeRoute,

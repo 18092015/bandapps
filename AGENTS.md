@@ -30,3 +30,4 @@ use the editor.
 <!-- LOVABLE:END -->
 
 - Mount the account provider and notifications once inside the root query provider so every hub page shares account state and feedback.
+- Keep retired file and sign-in URLs as redirects to home so old links do not expose removed screens; preserve stored data.

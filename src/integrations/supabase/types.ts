@@ -109,6 +109,27 @@ export type Database = {
         }
         Relationships: []
       }
+      upload_code_attempts: {
+        Row: {
+          created_at: string
+          id: number
+          ip_fingerprint: string
+          success: boolean
+        }
+        Insert: {
+          created_at?: string
+          id?: never
+          ip_fingerprint: string
+          success?: boolean
+        }
+        Update: {
+          created_at?: string
+          id?: never
+          ip_fingerprint?: string
+          success?: boolean
+        }
+        Relationships: []
+      }
       upload_codes: {
         Row: {
           code: string
@@ -133,6 +154,13 @@ export type Database = {
     }
     Functions: {
       my_upload_code: { Args: { _regenerate?: boolean }; Returns: string }
+      verify_upload_code: {
+        Args: { _code: string; _ip_fingerprint: string }
+        Returns: {
+          owner_user_id: string
+          rate_limited: boolean
+        }[]
+      }
     }
     Enums: {
       [_ in never]: never

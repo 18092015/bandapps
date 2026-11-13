@@ -15,6 +15,13 @@
       "when": 1794336244546,
       "tag": "0001_upload_codes",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1794590047194,
+      "tag": "0002_create_verify_upload_code",
+      "breakpoints": true
     }
   ]
 }

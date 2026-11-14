@@ -31,3 +31,5 @@ use the editor.
 
 - Mount the account provider and notifications once inside the root query provider so every hub page shares account state and feedback.
 - Keep retired file and sign-in URLs as redirects to home so old links do not expose removed screens; preserve stored data.
+- Keep AI tool selection in HubShell's collapsible sidebar and use SiteFrame's bare mode for embedded-only AI pages, so navigation never adds controls over the external tools.
+- Render app logos from the uploaded reference sprite through SVG viewBox crops, so each logo stays local to the asset flow without third-party favicon dependencies.

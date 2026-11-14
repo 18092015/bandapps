@@ -1,11 +1,25 @@
 import { useState } from 'react';
-import { Link } from '@tanstack/react-router';
+import { Link, useNavigate } from '@tanstack/react-router';
 import { Button } from '@/components/ui/button';
-import { MessageSquare, Mic, ExternalLink, LayoutGrid } from 'lucide-react';
+import { MessageSquare, Mic, ExternalLink, LayoutGrid, Image, Video } from 'lucide-react';
 import { SiteFrame } from './site-frame';
 import { AppsPanel } from './apps-panel';
 import { siteLogoUrl } from '@/lib/brand';
 export function HubShell({section='ia'}:{threadId?:string;section?:'ia'|'gravador'|'apps'}){
  const [ai,setAi]=useState<'perguntas'|'imagem'|'video'>('perguntas');
- return <div className="flex h-dvh min-h-0 flex-col bg-background md:flex-row"><aside className="order-2 flex shrink-0 items-center justify-around gap-1 border-t bg-card p-2 md:order-1 md:w-24 md:flex-col md:justify-start md:border-r md:border-t-0 md:py-4"><img src={siteLogoUrl} alt="Colband" className="mb-4 hidden size-12 object-contain md:block"/>{([{key:'ia',label:'IA',to:'/',icon:MessageSquare},{key:'gravador',label:'Gravador',to:'/gravador',icon:Mic},{key:'apps',label:'Apps',to:'/apps',icon:LayoutGrid}] as const).map(item=><Button key={item.key} asChild variant={section===item.key?'default':'ghost'} className="h-auto flex-col gap-1 px-3 py-2 text-xs"><Link to={item.to}><item.icon className="size-5"/>{item.label}</Link></Button>)}<Button asChild variant="ghost" className="h-auto flex-col gap-1 px-3 py-2 text-xs"><a href="https://colbandcom.sharepoint.com/Pages/Colband.aspx" target="_blank" rel="noopener noreferrer"><ExternalLink className="size-5"/>Moodle</a></Button></aside><main className="order-1 flex min-h-0 min-w-0 flex-1 flex-col gap-4 p-3 sm:p-4 md:order-2"><header className="flex flex-wrap items-center justify-between gap-2"><div className="flex min-w-0 items-center gap-2"><img src={siteLogoUrl} alt="" className="size-9 object-contain md:hidden"/><h1 className="text-lg font-bold">{section==='ia'?'Inteligência Artificial':section==='apps'?'Apps':'Gravador'}</h1></div></header>{section==='ia'?<><div className="flex gap-2">{([{key:'perguntas',label:'Perguntas'},{key:'imagem',label:'Imagem'},{key:'video',label:'Vídeo'}] as const).map(item=><Button key={item.key} variant={ai===item.key?'default':'secondary'} onClick={()=>setAi(item.key)}>{item.label}</Button>)}</div>{ai==='perguntas'?<SiteFrame key="perguntas" title="Perguntas" url="https://chat-and-constellation.lovable.app" fullscreen/>:<SiteFrame key={ai} title={ai==='imagem'?'Vidnoz':'Loremotion'} url={ai==='imagem'?'https://pt.vidnoz.com/ia-gerador-de-imagens-gratis.html':'https://loremotion.com/generate'} fullscreen/>}</>:section==='apps'?<AppsPanel/>:<SiteFrame url="https://gravacaofake.lovable.app/" title="Gravador"/>}</main></div>;
+ const [expanded,setExpanded]=useState(section==='ia');
+ const navigate=useNavigate();
+ return <div className="flex h-dvh min-h-0 bg-background">
+  <aside aria-label="Barra de ferramentas" className="flex w-20 shrink-0 flex-col items-center gap-1 overflow-y-auto border-r bg-card px-1 py-4 sm:w-24 sm:px-2">
+   <img src={siteLogoUrl} alt="Colband" className="mb-3 size-12 object-contain"/>
+   <Button variant={section==='ia'?'default':'ghost'} className="h-auto w-full flex-col gap-1 px-1 py-2 text-xs" aria-expanded={section==='ia'&&expanded} aria-controls="ai-options" onClick={()=>{if(section==='ia')setExpanded(!expanded);else{setExpanded(true);void navigate({to:'/'});}}}><MessageSquare/>IA</Button>
+   {section==='ia'&&expanded&&<div id="ai-options" className="mb-2 flex w-full flex-col gap-1 border-l border-border pl-1">{([{key:'perguntas',label:'Perguntas',icon:MessageSquare},{key:'imagem',label:'Imagem',icon:Image},{key:'video',label:'Vídeo',icon:Video}] as const).map(item=><Button key={item.key} variant={ai===item.key?'secondary':'ghost'} className="h-auto w-full flex-col gap-1 px-0 py-2 text-[10px] sm:text-xs" aria-pressed={ai===item.key} onClick={()=>setAi(item.key)}><item.icon/>{item.label}</Button>)}</div>}
+   {([{key:'gravador',label:'Gravador',to:'/gravador',icon:Mic},{key:'apps',label:'Apps',to:'/apps',icon:LayoutGrid}] as const).map(item=><Button key={item.key} asChild variant={section===item.key?'default':'ghost'} className="h-auto w-full flex-col gap-1 px-1 py-2 text-xs"><Link to={item.to}><item.icon/>{item.label}</Link></Button>)}
+   <Button asChild variant="ghost" className="h-auto w-full flex-col gap-1 px-1 py-2 text-xs"><a href="https://colbandcom.sharepoint.com/Pages/Colband.aspx" target="_blank" rel="noopener noreferrer"><ExternalLink/>Moodle</a></Button>
+  </aside>
+  <main className={`flex min-h-0 min-w-0 flex-1 flex-col ${section==='ia'?'':'gap-4 p-3 sm:p-4'}`}>
+   {section!=='ia'&&<header><h1 className="text-lg font-bold">{section==='apps'?'Apps':'Gravador'}</h1></header>}
+   {section==='ia'?<SiteFrame key={ai} title={ai==='perguntas'?'Perguntas':ai==='imagem'?'Vidnoz':'Loremotion'} url={ai==='perguntas'?'https://chat-and-constellation.lovable.app':ai==='imagem'?'https://pt.vidnoz.com/ia-gerador-de-imagens-gratis.html':'https://loremotion.com/generate'} bare/>:section==='apps'?<AppsPanel/>:<SiteFrame url="https://gravacaofake.lovable.app/" title="Gravador"/>}
+  </main>
+ </div>;
 }

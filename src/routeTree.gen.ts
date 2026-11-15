@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AppsRouteImport } from './routes/apps'
 import { Route as GravadorRouteImport } from './routes/gravador'
+import { Route as NotasRouteImport } from './routes/notas'
 import { Route as SalvarRouteImport } from './routes/salvar'
 import { Route as AuthCallbackRouteImport } from './routes/auth.callback'
 import { Route as ChatThreadIdRouteImport } from './routes/chat.$threadId'
@@ -32,6 +33,11 @@ const AppsRoute = AppsRouteImport.update({
 const GravadorRoute = GravadorRouteImport.update({
   id: '/gravador',
   path: '/gravador',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const NotasRoute = NotasRouteImport.update({
+  id: '/notas',
+  path: '/notas',
   getParentRoute: () => rootRouteImport,
 } as any)
 const SalvarRoute = SalvarRouteImport.update({
@@ -69,6 +75,7 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/apps': typeof AppsRoute
   '/gravador': typeof GravadorRoute
+  '/notas': typeof NotasRoute
   '/salvar': typeof SalvarRoute
   '/auth/callback': typeof AuthCallbackRoute
   '/chat/$threadId': typeof ChatThreadIdRoute
@@ -80,6 +87,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/apps': typeof AppsRoute
   '/gravador': typeof GravadorRoute
+  '/notas': typeof NotasRoute
   '/salvar': typeof SalvarRoute
   '/auth/callback': typeof AuthCallbackRoute
   '/chat/$threadId': typeof ChatThreadIdRoute
@@ -92,6 +100,7 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/apps': typeof AppsRoute
   '/gravador': typeof GravadorRoute
+  '/notas': typeof NotasRoute
   '/salvar': typeof SalvarRoute
   '/auth/callback': typeof AuthCallbackRoute
   '/chat/$threadId': typeof ChatThreadIdRoute
@@ -105,6 +114,7 @@ export interface FileRouteTypes {
     | '/'
     | '/apps'
     | '/gravador'
+    | '/notas'
     | '/salvar'
     | '/auth/callback'
     | '/chat/$threadId'
@@ -116,6 +126,7 @@ export interface FileRouteTypes {
     | '/'
     | '/apps'
     | '/gravador'
+    | '/notas'
     | '/salvar'
     | '/auth/callback'
     | '/chat/$threadId'
@@ -127,6 +138,7 @@ export interface FileRouteTypes {
     | '/'
     | '/apps'
     | '/gravador'
+    | '/notas'
     | '/salvar'
     | '/auth/callback'
     | '/chat/$threadId'
@@ -139,6 +151,7 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AppsRoute: typeof AppsRoute
   GravadorRoute: typeof GravadorRoute
+  NotasRoute: typeof NotasRoute
   SalvarRoute: typeof SalvarRoute
   AuthCallbackRoute: typeof AuthCallbackRoute
   ChatThreadIdRoute: typeof ChatThreadIdRoute
@@ -168,6 +181,13 @@ declare module '@tanstack/react-router' {
       path: '/gravador'
       fullPath: '/gravador'
       preLoaderRoute: typeof GravadorRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/notas': {
+      id: '/notas'
+      path: '/notas'
+      fullPath: '/notas'
+      preLoaderRoute: typeof NotasRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/salvar': {
@@ -219,6 +239,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AppsRoute: AppsRoute,
   GravadorRoute: GravadorRoute,
+  NotasRoute: NotasRoute,
   SalvarRoute: SalvarRoute,
   AuthCallbackRoute: AuthCallbackRoute,
   ChatThreadIdRoute: ChatThreadIdRoute,

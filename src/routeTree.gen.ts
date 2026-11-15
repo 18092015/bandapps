@@ -11,7 +11,6 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AppsRouteImport } from './routes/apps'
-import { Route as ContaRouteImport } from './routes/conta'
 import { Route as GravadorRouteImport } from './routes/gravador'
 import { Route as NotasRouteImport } from './routes/notas'
 import { Route as SalvarRouteImport } from './routes/salvar'
@@ -29,11 +28,6 @@ const IndexRoute = IndexRouteImport.update({
 const AppsRoute = AppsRouteImport.update({
   id: '/apps',
   path: '/apps',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ContaRoute = ContaRouteImport.update({
-  id: '/conta',
-  path: '/conta',
   getParentRoute: () => rootRouteImport,
 } as any)
 const GravadorRoute = GravadorRouteImport.update({
@@ -80,7 +74,6 @@ const ApiPublicVideoIdRoute = ApiPublicVideoIdRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/apps': typeof AppsRoute
-  '/conta': typeof ContaRoute
   '/gravador': typeof GravadorRoute
   '/notas': typeof NotasRoute
   '/salvar': typeof SalvarRoute
@@ -93,7 +86,6 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/apps': typeof AppsRoute
-  '/conta': typeof ContaRoute
   '/gravador': typeof GravadorRoute
   '/notas': typeof NotasRoute
   '/salvar': typeof SalvarRoute
@@ -107,7 +99,6 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/apps': typeof AppsRoute
-  '/conta': typeof ContaRoute
   '/gravador': typeof GravadorRoute
   '/notas': typeof NotasRoute
   '/salvar': typeof SalvarRoute
@@ -122,7 +113,6 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/apps'
-    | '/conta'
     | '/gravador'
     | '/notas'
     | '/salvar'
@@ -135,7 +125,6 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/apps'
-    | '/conta'
     | '/gravador'
     | '/notas'
     | '/salvar'
@@ -148,7 +137,6 @@ export interface FileRouteTypes {
     | '__root__'
     | '/'
     | '/apps'
-    | '/conta'
     | '/gravador'
     | '/notas'
     | '/salvar'
@@ -162,7 +150,6 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AppsRoute: typeof AppsRoute
-  ContaRoute: typeof ContaRoute
   GravadorRoute: typeof GravadorRoute
   NotasRoute: typeof NotasRoute
   SalvarRoute: typeof SalvarRoute
@@ -187,13 +174,6 @@ declare module '@tanstack/react-router' {
       path: '/apps'
       fullPath: '/apps'
       preLoaderRoute: typeof AppsRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/conta': {
-      id: '/conta'
-      path: '/conta'
-      fullPath: '/conta'
-      preLoaderRoute: typeof ContaRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/gravador': {
@@ -258,7 +238,6 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AppsRoute: AppsRoute,
-  ContaRoute: ContaRoute,
   GravadorRoute: GravadorRoute,
   NotasRoute: NotasRoute,
   SalvarRoute: SalvarRoute,
